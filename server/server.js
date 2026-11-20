@@ -5,6 +5,7 @@ require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const session = require("express-session");
+const path = require("path");
 
 // Create the Express application
 const app = express();
@@ -12,7 +13,7 @@ const app = express();
 // Set the server port
 const PORT = process.env.PORT || 5000;
 
-// Allow the server to read JSON request bodies
+// Allow the server to receive JSON data
 app.use(express.json());
 
 // Configure sessions for user authentication
@@ -26,19 +27,28 @@ app.use(session({
   }
 }));
 
-// Connect authentication routes to the server
+// Connect authentication routes
 app.use("/api/auth", require("./routes/authRoutes"));
 
-// Define a simple route to test the server
+/// Connect photo routes to the server
+app.use("/api/photos", require("./routes/photoRoutes"));
+
+// Make uploaded images accessible through the browser
+app.use(
+  "/uploads",
+  express.static(path.join(__dirname, "uploads"))
+);
+
+// Create a simple route to test the server
 app.get("/", (req, res) => {
   res.send("Welcome to Alzikrayat Server!");
 });
 
-// Connect to the MongoDB database
+// Connect the application to MongoDB
 mongoose
   .connect(process.env.MONGO_URI)
 
-  // Start the server only after connecting to MongoDB
+  // Start the server after connecting to the database
   .then(() => {
     console.log("MongoDB connected successfully");
 
@@ -47,7 +57,7 @@ mongoose
     });
   })
 
-  // Display an error if MongoDB connection fails
+  // Handle database connection errors
   .catch((error) => {
     console.error(
       "MongoDB connection failed:",
