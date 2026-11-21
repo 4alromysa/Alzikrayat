@@ -76,7 +76,7 @@ function AppContent() {
           <Route path="/" element={<Home />} />
           <Route path="/gallery" element={<Gallery />} />
           <Route path="/upload" element={user ? <UploadPhoto /> : <Navigate to="/login" replace />} />
-          <Route path="/photos/:id" element={<PhotoDetail />} />
+          <Route path="/photos/:id" element={<PhotoDetail currentUser={user} />} />
           <Route path="/register" element={user ? <Navigate to="/" replace /> : <Register onAuthenticated={setUser} />} />
           <Route path="/login" element={user ? <Navigate to="/" replace /> : <Login onAuthenticated={setUser} />} />
           <Route path="*" element={<Navigate to="/" replace />} />

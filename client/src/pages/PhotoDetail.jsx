@@ -1,14 +1,16 @@
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
-// Show a full-sized image and metadata from the existing photo API.
-export default function PhotoDetail() {
+// Display the selected photo and allow its owner to delete it.
+export default function PhotoDetail({ currentUser }) {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [photo, setPhoto] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [deleting, setDeleting] = useState(false);
 
-  // Reload the record when the photo route parameter changes.
+  // Load the selected photo whenever its ID changes.
   useEffect(() => {
     const controller = new AbortController();
 
@@ -16,6 +18,7 @@ export default function PhotoDetail() {
       setLoading(true);
       setError("");
       setPhoto(null);
+
       try {
         const response = await fetch(`/api/photos/${encodeURIComponent(id)}`, {
           signal: controller.signal,
@@ -25,7 +28,7 @@ export default function PhotoDetail() {
         if (!response.ok) throw new Error(data.message || "Could not load the photo.");
         if (!controller.signal.aborted) setPhoto(data);
       } catch (fetchError) {
-        if (fetchError.name !== "AbortError") {
+        if (fetchError.name !== "AbortError" && !controller.signal.aborted) {
           setError(fetchError.message || "Could not load the photo.");
         }
       } finally {
@@ -36,6 +39,35 @@ export default function PhotoDetail() {
     loadPhoto();
     return () => controller.abort();
   }, [id]);
+
+  // Compare the logged-in user with the photo owner.
+  const ownerId = photo?.userId?._id || photo?.userId;
+  const canDelete = Boolean(currentUser?.id && ownerId && String(currentUser.id) === String(ownerId));
+
+  // Request deletion only after the owner confirms the action.
+  const handleDelete = async () => {
+    if (!canDelete || deleting) return;
+    if (!window.confirm("Delete this photo? This cannot be undone.")) return;
+
+    setDeleting(true);
+    setError("");
+
+    try {
+      const response = await fetch(`/api/photos/${encodeURIComponent(id)}`, {
+        method: "DELETE",
+        credentials: "include",
+      });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.message || "Could not delete the photo.");
+
+      // Return to the gallery after successful deletion.
+      navigate("/gallery", { replace: true });
+    } catch (deleteError) {
+      setError(deleteError.message || "Could not delete the photo.");
+    } finally {
+      setDeleting(false);
+    }
+  };
 
   const author = photo
     ? [photo.userId?.firstName, photo.userId?.lastName].filter(Boolean).join(" ") || "Alzikrayat member"
@@ -61,6 +93,17 @@ export default function PhotoDetail() {
               <span>Shared by {author}</span>
               {date && <time dateTime={photo.dateTime}>{date}</time>}
             </div>
+            {/* Only show the delete action to the photo owner. */}
+            {canDelete && (
+              <button
+                type="button"
+                className="delete-photo-button"
+                onClick={handleDelete}
+                disabled={deleting}
+              >
+                {deleting ? "Deleting..." : "Delete Photo"}
+              </button>
+            )}
           </div>
         </article>
       )}

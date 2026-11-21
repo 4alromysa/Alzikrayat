@@ -83,3 +83,8 @@
 .detail-content h1 { font:normal clamp(1.8rem,4vw,3rem) Georgia,serif; overflow-wrap:anywhere; margin:0 0 14px; }
 .detail-description { line-height:1.7; overflow-wrap:anywhere; white-space:pre-wrap; }
 @media (max-width:550px) { .upload-form { padding:20px; } .detail-content { padding:22px; } }
+
+/* Photo deletion: a simple owner-only action. */
+.delete-photo-button { margin-top:24px; padding:11px 18px; border:1px solid #bd7e87; border-radius:9px; background:#fff1f1; color:#8e3f50; font:inherit; font-weight:600; cursor:pointer; }
+.delete-photo-button:hover { background:#f7dfe1; }
+.delete-photo-button:disabled { opacity:.65; cursor:wait; }
