@@ -32,7 +32,7 @@ export default function Register({ onAuthenticated }) {
       const data = await response.json();
       if (!response.ok) throw new Error(data.message || "Registration failed");
       onAuthenticated(data.user);
-      navigate("/");
+      navigate("/gallery");
     } catch (err) {
       setError(err.message || "Could not connect to the server");
     } finally {

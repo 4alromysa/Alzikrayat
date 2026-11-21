@@ -29,7 +29,7 @@ export default function Login({ onAuthenticated }) {
       const data = await response.json();
       if (!response.ok) throw new Error(data.message || "Login failed");
       onAuthenticated(data.user);
-      navigate("/");
+      navigate("/gallery");
     } catch (err) {
       setError(err.message || "Could not connect to the server");
     } finally {

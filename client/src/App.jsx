@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { BrowserRouter, Link, Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
+import Home from "./pages/Home";
+import Gallery from "./pages/Gallery";
 import "./App.css";
 
 // Shared navigation and application routes
@@ -52,7 +54,9 @@ function AppContent() {
         <nav aria-label="Main navigation">
           {user ? (
             <>
-              <span>Hi {user.firstName}</span>
+              <Link to="/">Home</Link>
+              <Link to="/gallery">Gallery</Link>
+              <span className="welcome-name">Hi {user.firstName}</span>
               <button type="button" className="nav-button" onClick={handleLogout}>Logout</button>
             </>
           ) : (
@@ -66,7 +70,8 @@ function AppContent() {
       </header>
       <main>
         <Routes>
-          <Route path="/" element={user ? <section className="welcome"><h1>Welcome to Alzikrayat</h1><p>Your photo gallery is coming next.</p></section> : <Navigate to="/login" replace />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/gallery" element={<Gallery />} />
           <Route path="/register" element={user ? <Navigate to="/" replace /> : <Register onAuthenticated={setUser} />} />
           <Route path="/login" element={user ? <Navigate to="/" replace /> : <Login onAuthenticated={setUser} />} />
           <Route path="*" element={<Navigate to="/" replace />} />

@@ -1,28 +1,58 @@
-/* Keep the navigation visible on each application page */
-.site-header { display: flex; justify-content: space-between; align-items: center; gap: 18px; padding: 18px max(24px, calc((100vw - 1100px) / 2)); background: white; border-bottom: 1px solid #e6e8ec; }
-.brand { font-size: 1.4rem; font-weight: 750; color: #4f46e5; text-decoration: none; }
-.site-header nav { display: flex; align-items: center; flex-wrap: wrap; gap: 15px; }
-.site-header nav a { text-decoration: none; color: #35314e; }
-.login-label { color: #667085; }
-.nav-button { background: #f1f0ff; border: 0; color: #4338ca; padding: 9px 14px; border-radius: 7px; cursor: pointer; }
-
-/* Reusable card styling for both authentication pages */
-.auth-card { width: min(100% - 32px, 480px); margin: 45px auto; padding: 32px; background: #fff; border: 1px solid #e6e8ec; border-radius: 14px; box-shadow: 0 8px 28px rgba(30, 25, 70, 0.06); }
-.auth-card h1 { margin: 0; text-align: center; color: #202033; font-size: 2rem; }
-.auth-subtitle { margin: 10px 0 26px; text-align: center; color: #667085; }
-.auth-form { display: flex; flex-direction: column; gap: 16px; }
-.auth-form label { display: flex; flex-direction: column; gap: 7px; font-size: 0.9rem; font-weight: 600; color: #344054; }
-.auth-form input, .auth-form textarea { width: 100%; padding: 11px 12px; border: 1px solid #cbd0d9; border-radius: 8px; font: inherit; font-weight: normal; color: #202033; background: white; }
-.auth-form input:focus, .auth-form textarea:focus { outline: 2px solid #ddd9ff; border-color: #675cf2; }
-.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-.primary-button { border: 0; border-radius: 8px; padding: 13px; background: #4f46e5; color: white; font-size: 1rem; font-weight: 650; cursor: pointer; }
-.primary-button:hover { background: #4338ca; }
-.primary-button:disabled { opacity: 0.6; cursor: wait; }
-.form-error { margin: 0; padding: 10px; border-radius: 7px; background: #fff1f2; color: #a4142c; }
-.auth-footer { text-align: center; margin: 24px 0 0; color: #667085; }
-.auth-footer a { color: #4f46e5; }
-.welcome { max-width: 800px; margin: 80px auto; padding: 0 22px; text-align: center; }
-.loading-message { text-align: center; margin: 70px auto; }
-
-/* Stack the name fields and navigation on narrow devices */
-@media (max-width: 550px) { .site-header { padding: 14px 16px; align-items: flex-start; flex-direction: column; } .auth-card { padding: 22px 18px; margin: 22px auto; } .form-row { grid-template-columns: 1fr; } }
+/* Rose Nostalgia palette: ivory, soft blush, dusty rose and warm mauve. */
+:root { --rose-bg:#fff8f4; --rose-paper:#ffffff; --rose-soft:#ead0cd; --rose-accent:#a56f80; --rose-dark:#805e68; --rose-ink:#553d46; --rose-muted:#8d7b80; --rose-edge:#efdddc; }
+.site-header { display:flex; justify-content:space-between; align-items:center; gap:18px; padding:18px max(24px, calc((100vw - 1100px) / 2)); background:rgba(255,255,255,.92); border-bottom:1px solid var(--rose-edge); }
+.brand { font-family:Georgia,serif; font-size:1.55rem; font-weight:700; color:var(--rose-dark); text-decoration:none; }
+.site-header nav { display:flex; align-items:center; flex-wrap:wrap; gap:18px; }
+.site-header nav a { text-decoration:none; color:var(--rose-ink); }
+.site-header nav a:hover { color:var(--rose-accent); }
+.welcome-name, .login-label { color:var(--rose-muted); }
+.nav-button { background:#f6e7e8; border:1px solid #ecd4d8; color:var(--rose-dark); padding:9px 14px; border-radius:9px; }
+.nav-button:hover { background:#efd7dc; }
+.page-container { max-width:1120px; margin:0 auto; padding:52px 24px 84px; }
+.eyebrow { letter-spacing:.18em; font-weight:700; font-size:.72rem; color:var(--rose-accent); }
+/* Authentication styling from the working stage, updated only for this theme. */
+.auth-card { width:min(100% - 32px, 480px); margin:45px auto; padding:32px; background:#fff; border:1px solid var(--rose-edge); border-radius:18px; box-shadow:0 14px 34px rgba(112,63,75,.08); }
+.auth-card h1 { margin:0; text-align:center; color:var(--rose-ink); font-family:Georgia,serif; font-size:2rem; }
+.auth-subtitle { margin:10px 0 26px; text-align:center; color:var(--rose-muted); }
+.auth-form { display:flex; flex-direction:column; gap:16px; }
+.auth-form label { display:flex; flex-direction:column; gap:7px; font-size:.9rem; font-weight:600; color:var(--rose-ink); }
+.auth-form input, .auth-form textarea { width:100%; padding:11px 12px; border:1px solid #dac9ce; border-radius:8px; font:inherit; font-weight:normal; color:var(--rose-ink); background:#fff; }
+.auth-form input:focus, .auth-form textarea:focus { outline:2px solid #f0dce2; border-color:var(--rose-accent); }
+.form-row { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.primary-button { display:inline-block; border:0; border-radius:9px; padding:13px 22px; background:var(--rose-dark); color:#fff; font-size:1rem; font-weight:650; cursor:pointer; text-decoration:none; text-align:center; }
+.primary-button:hover { background:#6c4c58; }
+.primary-button:disabled { opacity:.6; cursor:wait; }
+.form-error, .error-message { padding:12px; border-radius:8px; background:#fff0f1; color:#a4142c; }
+.auth-footer { text-align:center; margin:24px 0 0; color:var(--rose-muted); }
+.auth-footer a { color:var(--rose-dark); }
+.loading-message { text-align:center; margin:70px auto; }
+/* Main landing page. */
+.home-hero { text-align:center; max-width:790px; margin:30px auto 52px; padding:66px 42px; border-radius:22px; background:linear-gradient(135deg,#f3dadd,#fff5f0); }
+.home-hero h1 { margin:17px 0; font:normal clamp(2.3rem,5vw,4.1rem)/1.15 Georgia,serif; color:var(--rose-ink); }
+.home-hero p { color:#785f68; font-size:1.1rem; line-height:1.8; }
+.hero-link { margin-top:16px; }
+/* Gallery toolbar and alternative display layouts. */
+.gallery-intro { text-align:center; margin-bottom:38px; }
+.gallery-intro h1 { margin:12px 0; font:normal clamp(2.1rem,4vw,3.4rem) Georgia,serif; }
+.gallery-intro p, .gallery-toolbar p { color:var(--rose-muted); }
+.gallery-toolbar { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:22px; }
+.view-switch { display:flex; gap:5px; background:#f4e7e7; padding:5px; border-radius:10px; }
+.view-switch button { border:0; padding:8px 17px; border-radius:8px; color:var(--rose-dark); background:transparent; }
+.view-switch button.selected { background:#fff; box-shadow:0 2px 8px #6d46501a; font-weight:700; }
+.feedback-message, .empty-gallery { padding:60px 20px; text-align:center; color:var(--rose-muted); }
+.empty-gallery { background:#fff; border:1px dashed #dec3ca; border-radius:16px; }
+.empty-gallery h2 { color:var(--rose-ink); font-family:Georgia,serif; }
+.photo-collection.grid-view { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:24px; }
+.photo-card { min-width:0; overflow:hidden; background:#fff; border:1px solid var(--rose-edge); border-radius:14px; box-shadow:0 7px 20px rgba(92,52,65,.055); }
+.photo-image-wrap { width:100%; aspect-ratio:4/3; overflow:hidden; background:#f1e4e3; }
+.photo-image-wrap img { width:100%; height:100%; object-fit:cover; display:block; }
+.photo-card-body { padding:19px 20px; }
+.photo-card h2 { font:normal 1.35rem Georgia,serif; margin:0 0 10px; overflow-wrap:anywhere; }
+.photo-description { margin:0 0 16px; color:#826d74; line-height:1.6; overflow-wrap:anywhere; }
+.photo-meta { display:flex; gap:10px; justify-content:space-between; flex-wrap:wrap; color:#9a8189; font-size:.8rem; }
+.photo-collection.list-view { display:grid; grid-template-columns:1fr; gap:18px; }
+.list-view .photo-card { display:grid; grid-template-columns:minmax(150px,250px) 1fr; }
+.list-view .photo-image-wrap { height:100%; min-height:180px; aspect-ratio:auto; }
+.list-view .photo-card-body { display:flex; flex-direction:column; justify-content:center; }
+@media (max-width:850px) { .photo-collection.grid-view { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:550px) { .site-header { padding:14px 16px; align-items:flex-start; flex-direction:column; } .auth-card { padding:22px 18px; margin:22px auto; } .form-row { grid-template-columns:1fr; } .page-container { padding:32px 16px 58px; } .photo-collection.grid-view { grid-template-columns:1fr; } .list-view .photo-card { grid-template-columns:125px 1fr; } .list-view .photo-card-body { padding:13px; } .list-view .photo-image-wrap { min-height:145px; } .photo-meta { flex-direction:column; } .home-hero { padding:42px 20px; } }
