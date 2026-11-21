@@ -1,10 +1,17 @@
-// Import required modules
+
 const mongoose = require("mongoose");
 const fs = require("fs/promises");
 const path = require("path");
+const Joi = require("joi");
 
 // Import the Photo model
 const Photo = require("../models/Photo");
+
+// Validate photo details before saving
+const photoSchema = Joi.object({
+  title: Joi.string().trim().min(1).required(),
+  description: Joi.string().trim().allow("").optional()
+});
 
 // Remove an image file from the uploads folder
 const removeImage = async (fileName) => {
@@ -31,7 +38,6 @@ const getAllPhotos = async (req, res) => {
       .sort({ dateTime: -1 });
 
     res.status(200).json(photos);
-
   } catch (error) {
     res.status(500).json({
       message: "Failed to get photos"
@@ -42,7 +48,6 @@ const getAllPhotos = async (req, res) => {
 // Get a single photo by its ID
 const getPhotoById = async (req, res) => {
   try {
-
     // Check whether the supplied ID is valid
     if (!mongoose.isValidObjectId(req.params.id)) {
       return res.status(400).json({
@@ -61,7 +66,6 @@ const getPhotoById = async (req, res) => {
     }
 
     res.status(200).json(photo);
-
   } catch (error) {
     res.status(500).json({
       message: "Failed to get photo"
@@ -72,7 +76,6 @@ const getPhotoById = async (req, res) => {
 // Upload a new photo
 const uploadPhoto = async (req, res) => {
   try {
-
     // Make sure an image was uploaded
     if (!req.file) {
       return res.status(400).json({
@@ -80,23 +83,20 @@ const uploadPhoto = async (req, res) => {
       });
     }
 
-    // Read and validate the photo title
-    const title = typeof req.body.title === "string"
-      ? req.body.title.trim()
-      : "";
+    // Validate the submitted photo details
+    const { error, value } = photoSchema.validate(req.body);
 
-    if (!title) {
+    if (error) {
+      // Remove the uploaded file when validation fails
       await removeImage(req.file.filename);
 
       return res.status(400).json({
-        message: "Photo title is required"
+        message: error.details[0].message
       });
     }
 
-    // Read the optional description
-    const description = typeof req.body.description === "string"
-      ? req.body.description.trim()
-      : "";
+    // Use validated photo information
+    const { title, description = "" } = value;
 
     // Save photo information in MongoDB
     const photo = await Photo.create({
@@ -111,9 +111,7 @@ const uploadPhoto = async (req, res) => {
       message: "Photo uploaded successfully",
       photo
     });
-
   } catch (error) {
-
     // Remove the uploaded file if database saving fails
     if (req.file) {
       await removeImage(req.file.filename);
@@ -128,7 +126,6 @@ const uploadPhoto = async (req, res) => {
 // Delete a photo
 const deletePhoto = async (req, res) => {
   try {
-
     // Validate the photo ID
     if (!mongoose.isValidObjectId(req.params.id)) {
       return res.status(400).json({
@@ -161,7 +158,6 @@ const deletePhoto = async (req, res) => {
     res.status(200).json({
       message: "Photo deleted successfully"
     });
-
   } catch (error) {
     res.status(500).json({
       message: "Failed to delete photo"
