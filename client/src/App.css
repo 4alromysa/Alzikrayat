@@ -88,3 +88,24 @@
 .delete-photo-button { margin-top:24px; padding:11px 18px; border:1px solid #bd7e87; border-radius:9px; background:#fff1f1; color:#8e3f50; font:inherit; font-weight:600; cursor:pointer; }
 .delete-photo-button:hover { background:#f7dfe1; }
 .delete-photo-button:disabled { opacity:.65; cursor:wait; }
+
+
+/* Photo comments: a simple section below the photo details. */
+.comments-section { margin-top:28px; padding:28px 32px; background:#fff; border:1px solid var(--rose-edge); border-radius:18px; }
+.comments-section h2 { margin:0 0 20px; font:normal 1.8rem Georgia,serif; color:var(--rose-ink); }
+.comment-list { list-style:none; padding:0; margin:0 0 24px; display:grid; gap:14px; }
+.comment-item { background:var(--rose-bg); border:1px solid var(--rose-edge); border-radius:10px; padding:16px; }
+.comment-heading { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:8px; color:var(--rose-ink); }
+.comment-heading time { font-size:.8rem; color:var(--rose-muted); }
+.comment-item p { margin:10px 0 0; overflow-wrap:anywhere; white-space:pre-wrap; }
+.comment-form { display:flex; flex-direction:column; gap:12px; }
+.comment-form label { font-weight:600; color:var(--rose-ink); }
+.comment-form textarea { width:100%; resize:vertical; min-height:90px; padding:12px; border:1px solid #dac9ce; border-radius:9px; background:#fff; color:var(--rose-ink); font:inherit; box-sizing:border-box; }
+.comment-form textarea:focus { outline:2px solid #f0dce2; border-color:var(--rose-accent); }
+.comment-form .primary-button { align-self:flex-start; }
+@media (max-width:550px) { .comments-section { padding:22px; } }
+
+/* Keep comment deletion subtle and consistent with the Rose Nostalgia theme. */
+.delete-comment-button { margin-top:12px; padding:7px 12px; border:1px solid var(--rose-accent); border-radius:8px; background:transparent; color:var(--rose-ink); font:inherit; cursor:pointer; }
+.delete-comment-button:hover:not(:disabled) { background:#f4e5e9; }
+.delete-comment-button:disabled { opacity:.55; cursor:wait; }

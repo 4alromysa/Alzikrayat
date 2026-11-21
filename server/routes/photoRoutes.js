@@ -94,5 +94,8 @@ router.delete(
   deletePhoto
 );
 
+// Mount comment routes under each photo ID
+router.use("/:id/comments", require("./commentRoutes"));
+
 // Export photo routes
 module.exports = router;
