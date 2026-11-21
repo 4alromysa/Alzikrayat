@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 // Reusable component for a single photo in the gallery.
 export default function PhotoCard({ photo }) {
   // The backend exposes uploaded files through the /uploads route.
@@ -13,11 +15,11 @@ export default function PhotoCard({ photo }) {
 
   return (
     <article className="photo-card">
-      <div className="photo-image-wrap">
+      <Link className="photo-image-wrap photo-link" to={`/photos/${photo._id}`} aria-label={`View ${photo.title || "photo"} details`}>
         <img src={imageUrl} alt={photo.title || "Shared memory"} loading="lazy" />
-      </div>
+      </Link>
       <div className="photo-card-body">
-        <h2>{photo.title}</h2>
+        <h2><Link className="photo-title-link" to={`/photos/${photo._id}`}>{photo.title}</Link></h2>
         {photo.description && <p className="photo-description">{photo.description}</p>}
         <div className="photo-meta">
           <span>{author}</span>

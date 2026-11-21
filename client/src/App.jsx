@@ -4,6 +4,8 @@ import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
 import Gallery from "./pages/Gallery";
+import UploadPhoto from "./pages/UploadPhoto";
+import PhotoDetail from "./pages/PhotoDetail";
 import "./App.css";
 
 // Shared navigation and application routes
@@ -56,6 +58,7 @@ function AppContent() {
             <>
               <Link to="/">Home</Link>
               <Link to="/gallery">Gallery</Link>
+              <Link to="/upload">Add Photo</Link>
               <span className="welcome-name">Hi {user.firstName}</span>
               <button type="button" className="nav-button" onClick={handleLogout}>Logout</button>
             </>
@@ -72,6 +75,8 @@ function AppContent() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/gallery" element={<Gallery />} />
+          <Route path="/upload" element={user ? <UploadPhoto /> : <Navigate to="/login" replace />} />
+          <Route path="/photos/:id" element={<PhotoDetail />} />
           <Route path="/register" element={user ? <Navigate to="/" replace /> : <Register onAuthenticated={setUser} />} />
           <Route path="/login" element={user ? <Navigate to="/" replace /> : <Login onAuthenticated={setUser} />} />
           <Route path="*" element={<Navigate to="/" replace />} />

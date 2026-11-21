@@ -56,3 +56,30 @@
 .list-view .photo-card-body { display:flex; flex-direction:column; justify-content:center; }
 @media (max-width:850px) { .photo-collection.grid-view { grid-template-columns:repeat(2,minmax(0,1fr)); } }
 @media (max-width:550px) { .site-header { padding:14px 16px; align-items:flex-start; flex-direction:column; } .auth-card { padding:22px 18px; margin:22px auto; } .form-row { grid-template-columns:1fr; } .page-container { padding:32px 16px 58px; } .photo-collection.grid-view { grid-template-columns:1fr; } .list-view .photo-card { grid-template-columns:125px 1fr; } .list-view .photo-card-body { padding:13px; } .list-view .photo-image-wrap { min-height:145px; } .photo-meta { flex-direction:column; } .home-hero { padding:42px 20px; } }
+
+/* Links on photo cards open the detail route. */
+.photo-link { display:block; text-decoration:none; }
+.photo-link:focus-visible, .photo-title-link:focus-visible { outline:3px solid var(--rose-accent); outline-offset:3px; }
+.photo-title-link { color:var(--rose-ink); text-decoration:none; }
+.photo-title-link:hover { color:var(--rose-accent); text-decoration:underline; }
+
+/* Simple upload form matching the Rose Nostalgia design. */
+.section-heading { text-align:center; margin:0 auto 30px; }
+.section-heading h1 { font:normal clamp(2rem,4vw,3.3rem) Georgia,serif; margin:12px 0; }
+.section-heading p, .field-hint { color:var(--rose-muted); }
+.upload-form { max-width:600px; margin:0 auto; background:#fff; padding:30px; border:1px solid var(--rose-edge); border-radius:18px; box-shadow:0 14px 34px rgba(112,63,75,.07); }
+.upload-form .field-hint { margin:-8px 0 4px; font-size:.83rem; }
+.upload-form input[type="file"] { padding:11px; }
+.subtle-link { color:var(--rose-dark); text-decoration:none; font-weight:600; }
+.subtle-link:hover { text-decoration:underline; }
+.upload-form .subtle-link { text-align:center; }
+
+/* Photo detail layout keeps the full image within its container. */
+.detail-page > .subtle-link { display:inline-block; margin-bottom:22px; }
+.detail-card { overflow:hidden; border-radius:18px; background:#fff; border:1px solid var(--rose-edge); }
+.detail-image-wrap { background:#f4e8e8; display:flex; justify-content:center; align-items:center; min-height:240px; }
+.detail-image-wrap img { max-width:100%; max-height:70vh; width:auto; height:auto; object-fit:contain; display:block; }
+.detail-content { padding:28px 32px; }
+.detail-content h1 { font:normal clamp(1.8rem,4vw,3rem) Georgia,serif; overflow-wrap:anywhere; margin:0 0 14px; }
+.detail-description { line-height:1.7; overflow-wrap:anywhere; white-space:pre-wrap; }
+@media (max-width:550px) { .upload-form { padding:20px; } .detail-content { padding:22px; } }
